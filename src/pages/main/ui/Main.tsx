@@ -1,4 +1,4 @@
-import { FC } from 'react';
+import { FC, useContext } from 'react';
 import { Header } from '../../../widgets/header';
 import { PageLayout } from '../../../shared/page-layout';
 import { AddTask } from '../../../features/add-task';
@@ -30,7 +30,7 @@ const Main: FC = () => {
       <Header />
       <ContentContainer>
         <AddTask />
-        <TodoList data={test} />
+        <TodoList />
         <ControlPanel />
       </ContentContainer>
     </PageLayout>

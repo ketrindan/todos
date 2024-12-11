@@ -3,30 +3,30 @@ import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
-import { FC } from 'react';
+import { FC, useContext } from 'react';
 import { ToggleTask } from '../../../features/toggle-task';
-import { ITask, Task } from '../../../entities/task';
+import { Task } from '../../../entities/task';
 import styles from './TodoList.module.css';
+import { TasksContext } from '../../../shared/context';
 
-interface ITotoList {
-  data: ITask[];
-}
+const TotoList: FC = () => {
+  const { state, changeState } = useContext(TasksContext);
 
-const TotoList: FC<ITotoList> = ({ data }) => {
   return (
     <List disablePadding dense className={styles.list}>
-      {data.map((task) => {
-        return (
-          <ListItem key={task.id} className={styles.listItem} disablePadding>
-            <ListItemButton>
-              <ListItemIcon>
-                <ToggleTask data={task} />
-              </ListItemIcon>
-              <ListItemText primary={<Task data={task} />} />
-            </ListItemButton>
-          </ListItem>
-        );
-      })}
+      {state &&
+        state.tasks.map((task) => {
+          return (
+            <ListItem key={task.id} className={styles.listItem} disablePadding>
+              <ListItemButton>
+                <ListItemIcon>
+                  <ToggleTask data={task} />
+                </ListItemIcon>
+                <ListItemText primary={<Task data={task} />} />
+              </ListItemButton>
+            </ListItem>
+          );
+        })}
     </List>
   );
 };

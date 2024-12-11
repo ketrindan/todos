@@ -1,14 +1,19 @@
 import { ClearCompleted } from '../../../features/clear-completed';
 import FilterTask from '../../../features/filter-tasks/ui/FilterTasks';
-import { FC } from 'react';
+import { FC, useContext } from 'react';
 import styles from './ControlPanel.module.css';
 import { Box, Typography } from '@mui/material';
+import { TasksContext } from '../../../shared/context';
+import { countUncompleted } from '../../../entities/task';
 
-const TotoList: FC = () => {
+const ControlPanel: FC = () => {
+  const { state, changeState } = useContext(TasksContext);
+  const unCompleted = state && countUncompleted(state.tasks);
+
   return (
     <Box className={styles.box}>
       <Typography component="caption" className={styles.caption}>
-        X items left
+        {unCompleted} items left
       </Typography>
       <FilterTask />
       <ClearCompleted />
@@ -16,4 +21,4 @@ const TotoList: FC = () => {
   );
 };
 
-export default TotoList;
+export default ControlPanel;
