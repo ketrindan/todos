@@ -1,0 +1,12 @@
+.box {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  box-sizing: border-box;
+  padding: 7px 20px;
+}
+
+.caption {
+  font-size: 12px;
+  color: rgb(139, 135, 135);
+}

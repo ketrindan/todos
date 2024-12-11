@@ -1,0 +1,8 @@
+.button {
+  border: none;
+  text-transform: capitalize;
+  max-height: 20px;
+  padding: 0;
+  color: rgb(139, 135, 135);
+  font-size: 12px;
+}
