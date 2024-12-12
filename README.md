@@ -22,7 +22,7 @@
 
 ### **Ссылка на проект**
 
-[Проект на GitHub Pages](https://ketrindan.github.io/todos/){:target="\_blank"}
+[Проект на GitHub Pages](https://ketrindan.github.io/todos/)
 
 ### **Инструкция по установке и сборке**
 
