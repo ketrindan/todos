@@ -1,4 +1,4 @@
-import { ITask } from '../model'
+import { filterType, ITask } from '../model'
 
 export const countUncompleted = (data: ITask[]): number => {
   const unCompleted = data.reduce(function (sum, task) {
@@ -10,3 +10,19 @@ export const countUncompleted = (data: ITask[]): number => {
 
   return unCompleted;
 };
+
+export const filterTasks = (filter: filterType, tasks: ITask[]): ITask[] => {
+  switch (filter) {
+    case filterType.ALL: {
+      return [...tasks]
+    }
+    case filterType.ACTIVE: {
+      return [...tasks.filter((task) => !task.isDone)]
+    }
+    case filterType.COMPLETED: {
+      return [...tasks.filter((task) => task.isDone)]
+    }
+    default:
+      throw new Error('Unexpected filter');
+  }
+}

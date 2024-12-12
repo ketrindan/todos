@@ -1,4 +1,5 @@
 import { v4 as uuidv4 } from 'uuid';
+import { filterTasks } from '../lib';
 export interface ITask {
   id: string;
   text: string;
@@ -8,9 +9,7 @@ export interface ITask {
 export enum ActionType {
   ADD = 'ADD',
   TOGGLE = 'TOGGLE',
-  FILTERACTIVE = 'FILTERACTIVE',
-  FILTERCOMPLETED = 'FILTERCOMPLETED',
-  SHOWALL = 'SHOWALL',
+  FILTER = 'FILTERTASKS',
   CLEARCOMPLETED = 'CLEARCOMPLETED',
 }
 
@@ -31,18 +30,20 @@ type ActionObjectPayload = {
 };
 
 type ActionArrayPayload = {
-  type:
-    | ActionType.FILTERACTIVE
-    | ActionType.FILTERCOMPLETED
-    | ActionType.SHOWALL
-    | ActionType.CLEARCOMPLETED;
+  type: ActionType.CLEARCOMPLETED;
   payload: ITask[];
+};
+
+type ActionFilterPayload = {
+  type: ActionType.FILTER;
+  payload: filterType;
 };
 
 export type Action =
   | ActionStringPayload
   | ActionObjectPayload
-  | ActionArrayPayload;
+  | ActionArrayPayload
+  | ActionFilterPayload;
 
 export type State = {
   tasks: ITask[];
@@ -75,33 +76,25 @@ export const tasksReducer = (state: State, action: Action): State => {
               : task
           ),
         ],
+        filteredTasks: [
+          ...state.filteredTasks.filter(
+            (task) => task.id !== action.payload.id
+          ),
+        ],
       };
     }
-    case ActionType.FILTERACTIVE: {
+    case ActionType.FILTER: {
       return {
         ...state,
-        filteredTasks: [...state.tasks.filter((task) => !task.isDone)],
-        filter: filterType.ACTIVE,
-      };
-    }
-    case ActionType.FILTERCOMPLETED: {
-      return {
-        ...state,
-        filteredTasks: [...state.tasks.filter((task) => task.isDone)],
-        filter: filterType.COMPLETED,
-      };
-    }
-    case ActionType.SHOWALL: {
-      return {
-        ...state,
-        filteredTasks: [...state.tasks],
-        filter: filterType.ALL,
+        filteredTasks: filterTasks(action.payload, state.tasks),
+        filter: action.payload,
       };
     }
     case ActionType.CLEARCOMPLETED: {
       return {
         ...state,
         tasks: [...state.tasks.filter((task) => !task.isDone)],
+        filteredTasks: [...state.filteredTasks.filter((task) => !task.isDone)],
       };
     }
     default:

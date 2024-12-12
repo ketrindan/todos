@@ -7,12 +7,12 @@ import { TasksContext } from '../../../shared/context';
 import { countUncompleted } from '../../../entities/task';
 
 const ControlPanel: FC = () => {
-  const { state, changeState } = useContext(TasksContext);
+  const { state } = useContext(TasksContext);
   const unCompleted = state && countUncompleted(state.tasks);
 
   return (
     <Box className={styles.box}>
-      <Typography component="caption" className={styles.caption}>
+      <Typography component="p" className={styles.caption}>
         {unCompleted} items left
       </Typography>
       <FilterTask />

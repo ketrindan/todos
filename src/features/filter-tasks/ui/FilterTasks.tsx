@@ -1,22 +1,33 @@
 import { ToggleBtn } from '../../../shared/toggle-button';
 import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
-import { FC } from 'react';
+import { FC, useCallback, useContext } from 'react';
+import { TasksContext } from '../../../shared/context';
+import { ActionType, filterType } from '../../../entities/task';
 
 const buttons = [
   {
-    name: 'All',
+    name: filterType.ALL,
   },
   {
-    name: 'Active',
+    name: filterType.ACTIVE,
   },
   {
-    name: 'Completed',
+    name: filterType.COMPLETED,
   },
 ];
 
-const FilterTask: FC = () => {
+const FilterTasks: FC = () => {
+  const { state, changeState } = useContext(TasksContext);
+
+  const filterTasks = useCallback(
+    (event: React.MouseEvent<HTMLElement>, filter: filterType) => {
+      changeState && changeState({ type: ActionType.FILTER, payload: filter });
+    },
+    [changeState]
+  );
+
   return (
-    <ToggleButtonGroup>
+    <ToggleButtonGroup value={state?.filter} onChange={filterTasks} exclusive>
       {buttons.map((btn) => {
         return <ToggleBtn key={btn.name} name={btn.name} />;
       })}
@@ -24,4 +35,4 @@ const FilterTask: FC = () => {
   );
 };
 
-export default FilterTask;
+export default FilterTasks;

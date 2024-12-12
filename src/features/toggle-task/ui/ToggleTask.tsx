@@ -1,6 +1,6 @@
 import Checkbox from '@mui/material/Checkbox';
 import { ActionType, ITask } from '../../../entities/task';
-import { FC, useContext } from 'react';
+import { FC, useCallback, useContext } from 'react';
 import { TasksContext } from '../../../shared/context';
 
 interface IToggleTask {
@@ -10,13 +10,13 @@ interface IToggleTask {
 const ToggleTask: FC<IToggleTask> = ({ data }) => {
   const { isDone } = data;
 
-  const { state, changeState } = useContext(TasksContext);
+  const { changeState } = useContext(TasksContext);
 
-  const toggleStatus = (task: ITask) => {
-    changeState && changeState({ type: ActionType.TOGGLE, payload: task });
-  };
+  const toggleStatus = useCallback(() => {
+    changeState && changeState({ type: ActionType.TOGGLE, payload: data });
+  }, [changeState, data]);
 
-  return <Checkbox checked={isDone} onClick={() => toggleStatus(data)} />;
+  return <Checkbox checked={isDone} onClick={toggleStatus} />;
 };
 
 export default ToggleTask;
