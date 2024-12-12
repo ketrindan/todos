@@ -63,6 +63,17 @@ export const tasksReducer = (state: State, action: Action): State => {
             isDone: false,
           },
         ],
+        filteredTasks:
+          state.filter === filterType.ACTIVE
+            ? [
+                ...state.filteredTasks,
+                {
+                  id: state.tasks.length.toString(),
+                  text: action.payload,
+                  isDone: false,
+                },
+              ]
+            : [...state.filteredTasks],
       };
     }
     case ActionType.TOGGLE: {
