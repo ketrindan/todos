@@ -1,4 +1,3 @@
-import { v4 as uuidv4 } from 'uuid';
 import { filterTasks } from '../lib';
 export interface ITask {
   id: string;
@@ -59,7 +58,7 @@ export const tasksReducer = (state: State, action: Action): State => {
         tasks: [
           ...state.tasks,
           {
-            id: uuidv4(),
+            id: state.tasks.length.toString(),
             text: action.payload,
             isDone: false,
           },

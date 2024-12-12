@@ -3,17 +3,17 @@ import { filterType, State } from '../entities/task';
 export const initialState: State = {
   tasks: [
     {
-      id: '1',
+      id: '0',
       text: 'Написать код',
       isDone: true,
     },
     {
-      id: '2',
+      id: '1',
       text: 'Покрыть тестами',
       isDone: false,
     },
     {
-      id: '3',
+      id: '2',
       text: 'Пообедать',
       isDone: true,
     },
